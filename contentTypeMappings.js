@@ -27,6 +27,7 @@ exports.values = {
     "css": "text/css",
     "html": "text/html",
     "htm": "text/html",
+    "xml": "text/xml",
     "aspx": "text/html",
     "ico": "image/x-icon"
 };
