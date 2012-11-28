@@ -29,18 +29,6 @@ exports.values = [
         }
     },
     {
-        pattern: /\/sandbox$/,
-        getUrlSubstitution: function () {
-            return "/index.sandbox.html";
-        }
-    },
-    {
-        pattern: /^\/admin$/,
-        getUrlSubstitution: function () {
-            return "/admin.html";
-        }
-    },
-    {
         pattern: /^\/admin\/log\/latest\/(.*)/,
         getUrlSubstitution: function (matched) {
             return logFilePath + logs.getLogFileNameLatest(matched[1]);
