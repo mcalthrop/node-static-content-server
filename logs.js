@@ -7,7 +7,7 @@
 // 26 Sep 2012
 
 var fs = require('fs');
-var logFilePath = "../logs/";
+var logFilePath = "../logs/";       // change this to wherever you want to store your logs
 var serverLogFileName = createServerLogFileName();
 
 /**
