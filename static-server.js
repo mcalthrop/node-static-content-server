@@ -120,7 +120,7 @@ Starting static server: ' + (new Date()).toString() + " as user " + process.env[
 
         for (var i = 0, len = staticServerConfigs.values.length ; i < len ; i++) {
             config = staticServerConfigs.values[i];
-            serverMessage = "HTTP server created: " + config.port + " " + config.name + " " + config.webRoot;
+            serverMessage = "HTTP server created: " + [config.port, config.name, config.version, config.webRoot].join(" ");
             httpServer = http.createServer();
 
             httpServer.on('request', function (request, response) {
