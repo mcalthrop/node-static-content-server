@@ -85,9 +85,10 @@
      *
      * @param url {String} the URL passed in to the web server
      * @param webRoot {String} the local filesystem webroot
+     * @param data {String} any data that was passed in to the request
      * @return {String}
      */
-    function createLocalFileName(url, webRoot) {
+    function createLocalFileName(url, webRoot, data) {
         var urlWithoutQueryString = url.replace(/^([^?]*).*/, "$1");
 
         // Check to see if there is a mapping for this URL
@@ -96,7 +97,7 @@
             var matches = urlWithoutQueryString.match(urlMapping.pattern);
 
             if (matches) {
-                urlWithoutQueryString = urlMapping.getUrlSubstitution(matches);
+                urlWithoutQueryString = urlMapping.getUrlSubstitution(matches, data);
 
                 break;
             }
@@ -128,9 +129,19 @@ Starting static server: ' + (new Date()).toString() + " as user " + process.env[
                 var browserName = browserDetect.browserName(userAgent);
                 var ipAddress = request.connection.remoteAddress;
                 var webRoot = getWebRootForPort(port);
-                var file = createLocalFileName(request.url, webRoot);
+                var data = '';
 
-                serveFile(response, file, port, ipAddress, browserName);
+                request.setEncoding('utf8');
+
+                request.on('data', function (chunk) {
+                    data += chunk;
+                });
+
+                request.on('end', function () {
+                    var localFileName = createLocalFileName(request.url, webRoot, data);
+
+                    serveFile(response, localFileName, port, ipAddress, browserName);
+                });
             });
 
             httpServer.listen(config.port);
